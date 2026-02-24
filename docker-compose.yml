@@ -21,7 +21,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 5s
@@ -70,8 +70,21 @@ services:
       - redis_data:/data
     command: redis-server --appendonly yes --requirepass ${DB_PASS}
 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${DB_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${DB_PASS}
+    volumes:
+      - grafana_data:/var/lib/grafana
+
 volumes:
   mongo_volume:
   pgdata:
   mysql_data:
   redis_data:
+  grafana_data:
