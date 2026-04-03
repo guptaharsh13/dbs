@@ -1,0 +1,13 @@
+apiVersion: 1
+
+datasources:
+  - name: MongoDB
+    type: haohanyang-mongodb-datasource
+    access: proxy
+    isDefault: false
+    editable: true
+    user: harsh
+    jsonData:
+      host: mongo
+      port: 27017
+      database: admin
